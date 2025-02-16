@@ -40,11 +40,9 @@ def create_app():
 
     # Optional: Print all registered routes for debugging
 
-# Verifica
-# Verifica
-#    print("Registered Routes:")
-#    for rule in app.url_map.iter_rules():
- #       print(rule)
+    print("Registered Routes:")
+    for rule in app.url_map.iter_rules():
+        print(rule)
 
     return app
 

@@ -1,6 +1,6 @@
 import requests
 from flask import Blueprint, request, jsonify
-from app.services.db import mongo
+from services.db import mongo
 
 # Define the Blueprint
 recommended_bp = Blueprint("users", __name__)
