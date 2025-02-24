@@ -20,9 +20,9 @@ def validate_view(data):
         - False and a message dictionary if validation fails, containing details on the missing fields or type mismatches.
     """
     required_fields = {
-        "filmId": int,
-        "userId": int,
-        "profileId": int,
+        "filmId": str,
+        "userId": str,
+        "profileId": str,
         "timesOFTheFilm": int
     }
 
@@ -60,9 +60,9 @@ def validate_recommended(data):
         - False and a message dictionary if validation fails, containing details on the missing fields or type mismatches.
     """
     required_fields = {
-        "filmId": int,
-        "userId": int,
-        "profileId": int
+        "filmId": str,
+        "userId": str,
+        "profileId": str
     }
 
     # Check for missing fields

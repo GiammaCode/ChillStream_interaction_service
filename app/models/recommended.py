@@ -30,6 +30,7 @@ class Recommended:
         profileId : int
             The unique identifier of the user's profile for which the recommendation is made.
         """
+        self.recommended_id = str(recommended_id) if recommended_id else None
         self.filmId = filmId  # Unique ID of the film
         self.userId = userId  # Unique ID of the user
         self.profileId = profileId  # Unique ID of the profile
@@ -44,6 +45,7 @@ class Recommended:
             A dictionary containing the recommended film, user, and profile identifiers.
         """
         return {
+            "_id": self.recommended_id,
             "filmId": self.filmId,
             "userId": self.userId,
             "profileId": self.profileId

@@ -8,7 +8,7 @@ recommended_bp = Blueprint("users", __name__)
 # Base URL for the content service
 CONTENT_SERVICE_URL = "http://content_service:8080/films"
 
-@recommended_bp.route("/<int:userId>/profiles/<int:profileId>/recommendeds", methods=["GET"])
+@recommended_bp.route("/<string:userId>/profiles/<string:profileId>/recommendeds", methods=["GET"])
 def get_recommendeds(userId, profileId):
     """
     Retrieve recommended films for a specific user profile, including detailed film information.
@@ -50,7 +50,7 @@ def get_recommendeds(userId, profileId):
     return jsonify(enriched_recs), 200
 
 
-@recommended_bp.route("/<int:userId>/profiles/<int:profileId>/recommendeds", methods=["POST"])
+@recommended_bp.route("/<string:userId>/profiles/<string:profileId>/recommendeds", methods=["POST"])
 def add_recommendeds(userId, profileId):
     """
     Add one or more recommended films for a specific user profile.
@@ -121,7 +121,7 @@ def add_recommendeds(userId, profileId):
     return jsonify({"message": "Recommended film added successfully"}), 201
 
 
-@recommended_bp.route("/<int:userId>/profiles/<int:profileId>/recommendeds/<int:filmId>", methods=["DELETE"])
+@recommended_bp.route("/<string:userId>/profiles/<string:profileId>/recommendeds/<string:filmId>", methods=["DELETE"])
 def delete_recommendeds(userId, profileId, filmId):
     """
     Delete a specific recommended film for a user profile.

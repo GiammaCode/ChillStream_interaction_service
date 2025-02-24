@@ -9,7 +9,7 @@ view_bp = Blueprint("users", __name__)
 # Base URL for the content service
 CONTENT_SERVICE_URL = "http://content_service:8080/films"
 
-@view_bp.route("/<int:userId>/profiles/<int:profileId>/views", methods=["GET"])
+@view_bp.route("/<string:userId>/profiles/<string:profileId>/views", methods=["GET"])
 def get_views(userId, profileId):
     """
     Retrieve all film views for a specific user profile, including detailed film information.
@@ -51,7 +51,7 @@ def get_views(userId, profileId):
     return jsonify(enriched_views), 200
 
 
-@view_bp.route("/<int:userId>/profiles/<int:profileId>/views", methods=["POST"])
+@view_bp.route("/<string:userId>/profiles/<string:profileId>/views", methods=["POST"])
 def add_views(userId, profileId):
     """
     Add one or more film views for a specific user profile.
@@ -103,7 +103,7 @@ def add_views(userId, profileId):
     return jsonify({"message": "View added successfully"}), 201
 
 
-@view_bp.route("/<int:userId>/profiles/<int:profileId>/views/<int:filmId>", methods=["GET"])
+@view_bp.route("/<string:userId>/profiles/<string:profileId>/views/<string:filmId>", methods=["GET"])
 def get_view_by_id(userId, profileId, filmId):
     """
     Retrieve detailed information about a specific film view for a user profile.
@@ -147,7 +147,7 @@ def get_view_by_id(userId, profileId, filmId):
     return jsonify(view), 200
 
 
-@view_bp.route("/<int:userId>/profiles/<int:profileId>/views/<int:filmId>", methods=["PUT"])
+@view_bp.route("/<string:userId>/profiles/<string:profileId>/views/<string:filmId>", methods=["PUT"])
 def update_view(userId, profileId, filmId):
     """
     Update details of a specific film view for a user profile.
@@ -188,7 +188,7 @@ def update_view(userId, profileId, filmId):
     return jsonify({"error": "View not found"}), 404
 
 
-@view_bp.route("/<int:userId>/profiles/<int:profileId>/views/<int:filmId>", methods=["DELETE"])
+@view_bp.route("/<string:userId>/profiles/<string:profileId>/views/<string:filmId>", methods=["DELETE"])
 def delete_view(userId, profileId, filmId):
     """
     Delete a specific film view for a user profile.

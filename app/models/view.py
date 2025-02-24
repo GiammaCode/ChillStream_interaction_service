@@ -4,11 +4,11 @@ class View:
 
     Attributes
     ----------
-    filmId : int
+    filmId :
         The unique identifier of the viewed film.
-    userId : int
+    userId :
         The unique identifier of the user who owns the profile.
-    profileId : int
+    profileId :
         The unique identifier of the user's profile that viewed the film.
     timesOFTheFilm : int
         The number of times the film has been viewed by the profile.
@@ -19,7 +19,7 @@ class View:
         Converts the View instance into a dictionary format.
     """
 
-    def __init__(self, filmId: int, userId: int, profileId: int, timesOFTheFilm: int):
+    def __init__(self, filmId, userId, profileId, timesOFTheFilm: int):
         """
         Initializes a View instance with film, user, profile identifiers, and view count.
 
@@ -34,6 +34,7 @@ class View:
         timesOFTheFilm : int
             The number of times the film has been viewed by the profile.
         """
+        self.view_id = str(view_id) if view_id else None
         self.filmId = filmId  # Unique ID of the film
         self.userId = userId  # Unique ID of the user
         self.profileId = profileId  # Unique ID of the profile
@@ -49,6 +50,7 @@ class View:
             A dictionary containing the viewed film, user, profile identifiers, and view count.
         """
         return {
+            "_id": self.view_id,
             "filmId": self.filmId,
             "userId": self.userId,
             "profileId": self.profileId,
