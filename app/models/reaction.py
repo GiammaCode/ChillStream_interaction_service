@@ -6,7 +6,7 @@ class Reaction:
     Represents a reaction (like, dislike, etc.) from a user profile.
     """
 
-    def __init__(self, profile_id, type_of_reaction, timestamp=None, reaction_id=None):
+    def __init__(self, filmId,profile_id, type_of_reaction, timestamp=None, reaction_id=None):
         """
         Initializes a Reaction instance.
 

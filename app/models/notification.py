@@ -6,7 +6,7 @@ class Notification:
     Represents a notification between users.
     """
 
-    def __init__(self, notification_id ,sender_id, text, timestamp):
+    def __init__(self, notification_id ,senderNickname,ricever_id, text, timestamp):
         """
         Initializes a Notification instance.
 
@@ -16,7 +16,8 @@ class Notification:
             timestamp (str, optional): The time the notification was created.
         """
         self.notification_id = str(notification_id) if notification_id else None
-        self.sender_id = str(sender_id)
+        self.senderNickname= str(senderNickname)
+        self.ricever_id = str(ricever_id)
         self.isChecked= False
         self.text = text
         self.timestamp = timestamp if timestamp else datetime.utcnow().isoformat()
@@ -27,7 +28,8 @@ class Notification:
         """
         return {
             "_id": self.notification_id,
-            "sender_id": self.sender_id,
+            "senderNickname": self.senderNickname,
+            "ricever_id":self.ricever_id,
             "isChecked":self.isChecked,
             "text": self.text,
             "timestamp": self.timestamp
@@ -40,8 +42,8 @@ class Notification:
         """
         return Notification(
             notification_id=data.get("_id"),
-            sender_id=data.get("sender_id"),
-            isChecked=data.get("isChecked"),
+            senderNickname=data.get("senderNickname"),
+            ricever_id = data.get("ricever_id"),
             text=data.get("text"),
             timestamp=data.get("timestamp")
         )

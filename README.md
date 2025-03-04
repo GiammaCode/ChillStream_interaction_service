@@ -43,7 +43,8 @@ example of recommended
 }
 example of notification (the receiver_id has to be the profileiD of the url)
 {
-"sender_id": "67bdeab4b182c9b504b10a4d",
+"senderNickname": "67bdeab4b182c9b504b10a4d",
+"ricever_id":
 "text": "ciao matrrr"
 }
 
