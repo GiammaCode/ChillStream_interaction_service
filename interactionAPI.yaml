@@ -1,0 +1,254 @@
+openapi: 3.0.3
+info:
+  title: ChillStream API
+  version: 1.0.0
+  description: REST API for managing notifications, reactions, views and recommended films.
+
+paths:
+  /{userId}/profiles/{profileId}/notifications:
+    get:
+      summary: Get all notifications for a profile
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+      responses:
+        200:
+          description: List of notifications
+    post:
+      summary: Add a notification
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationInput'
+      responses:
+        201:
+          description: Notification created
+
+  /{userId}/profiles/{profileId}/notifications/{notificationId}:
+    get:
+      summary: Get a single notification
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+        - $ref: '#/components/parameters/notificationId'
+      responses:
+        200:
+          description: Notification object
+    put:
+      summary: Update a notification
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+        - $ref: '#/components/parameters/notificationId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationUpdate'
+      responses:
+        200:
+          description: Notification updated
+    delete:
+      summary: Delete a notification
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+        - $ref: '#/components/parameters/notificationId'
+      responses:
+        204:
+          description: Notification deleted
+
+  /{userId}/profiles/{profileId}/reactions:
+    get:
+      summary: Get all reactions for a profile
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+      responses:
+        200:
+          description: List of reactions
+    post:
+      summary: Add a reaction
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReactionInput'
+      responses:
+        201:
+          description: Reaction created
+
+  /{userId}/profiles/{profileId}/reactions/{reactionId}:
+    delete:
+      summary: Delete a reaction
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+        - name: reactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Reaction deleted
+
+  /{userId}/profiles/{profileId}/views:
+    get:
+      summary: Get views for a profile
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+      responses:
+        200:
+          description: List of views
+    post:
+      summary: Add views (single or multiple)
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        201:
+          description: View(s) created
+
+  /{userId}/profiles/{profileId}/views/{filmId}:
+    get:
+      summary: Get a specific view by film ID
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+        - name: filmId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: View with film details
+    put:
+      summary: Update a view
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+        - name: filmId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        200:
+          description: View updated
+    delete:
+      summary: Delete a view
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+        - name: filmId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: View deleted
+
+  /{userId}/profiles/{profileId}/recommendeds:
+    get:
+      summary: Get recommended films
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+      responses:
+        200:
+          description: List of recommended films
+    post:
+      summary: Add recommended film(s)
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        201:
+          description: Recommended added
+
+  /{userId}/profiles/{profileId}/recommendeds/{filmId}:
+    delete:
+      summary: Delete a recommended film
+      parameters:
+        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/profileId'
+        - name: filmId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Recommended film deleted
+
+components:
+  parameters:
+    userId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+    profileId:
+      name: profileId
+      in: path
+      required: true
+      schema:
+        type: string
+    notificationId:
+      name: notificationId
+      in: path
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    NotificationInput:
+      type: object
+      required: [senderNickname, text]
+      properties:
+        senderNickname:
+          type: string
+        text:
+          type: string
+
+    NotificationUpdate:
+      type: object
+      properties:
+        text:
+          type: string
+        isChecked:
+          type: boolean
+
+    ReactionInput:
+      type: object
+      required: [type_of_reaction]
+      properties:
+        type_of_reaction:
+          type: string

@@ -31,9 +31,9 @@ class Recommended:
             The unique identifier of the user's profile for which the recommendation is made.
         """
         self.recommended_id = str(recommended_id) if recommended_id else None
-        self.filmId = filmId  # Unique ID of the film
-        self.userId = userId  # Unique ID of the user
-        self.profileId = profileId  # Unique ID of the profile
+        self.filmId = filmId
+        self.userId = userId
+        self.profileId = profileId
 
     def to_dict(self):
         """

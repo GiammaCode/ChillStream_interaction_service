@@ -22,17 +22,13 @@ def get_reactions(userId, profileId):
     print(f"🔍 DEBUG: Ricevuta richiesta GET per userId: {userId}, profileId: {profileId}")  # Debug
 
     try:
-        # Controlla se gli ID sono validi
         user_object_id = ObjectId(userId)
         profile_object_id = ObjectId(profileId)
     except Exception as e:
         return jsonify({"error": "Invalid ID format"}), 400
 
-    # Recupera tutte le reazioni fatte dal profilo
     reactions = list(mongo.db.reactions.find({"profile_id": profileId}))
 
-
-    # Converti gli ObjectId in stringhe per compatibilità JSON
     for reaction in reactions:
         reaction["_id"] = str(reaction["_id"])
         reaction["profile_id"] = str(reaction["profile_id"])
@@ -54,18 +50,15 @@ def add_reaction(userId, profileId):
     data = request.json
 
     try:
-        # Controlla se gli ID sono validi
         user_object_id = ObjectId(userId)
         profile_object_id = ObjectId(profileId)
     except Exception as e:
         return jsonify({"error": "Invalid ID format"}), 400
 
-
-    # Creazione della reazione
     reaction_data = {
         "profile_id": profileId,
-        "type_of_reaction": data.get("type_of_reaction", ""),  # Tipo di reazione
-        "timestamp": datetime.utcnow().isoformat()  # Timestamp attuale
+        "type_of_reaction": data.get("type_of_reaction", ""),
+        "timestamp": datetime.utcnow().isoformat()
     }
 
     result = mongo.db.reactions.insert_one(reaction_data)

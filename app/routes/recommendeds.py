@@ -5,7 +5,6 @@ from services.db import mongo
 # Define the Blueprint
 recommended_bp = Blueprint("users", __name__)
 
-# Base URL for the content service
 CONTENT_SERVICE_URL = "http://content_service:8080/films"
 
 @recommended_bp.route("/<string:userId>/profiles/<string:profileId>/recommendeds", methods=["GET"])
@@ -32,8 +31,6 @@ def get_recommendeds(userId, profileId):
         film_id = rec.get("filmId")
         if not film_id:
             continue
-
-        # Request film details from the content service
         try:
             response = requests.get(f"{CONTENT_SERVICE_URL}/{film_id}")
             if response.status_code == 200:
@@ -75,7 +72,6 @@ def add_recommendeds(userId, profileId):
     """
     data = request.json
 
-    # Handle a list of recommended films
     if isinstance(data, list):
         errors = []
         for item in data:
@@ -103,7 +99,6 @@ def add_recommendeds(userId, profileId):
 
         return jsonify({"message": "Recommended films added successfully"}), 201
 
-    # Handle a single recommended film
     required_fields = ["filmId", "userId", "profileId"]
     for field in required_fields:
         if field not in data:

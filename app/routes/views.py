@@ -6,7 +6,6 @@ from utils.validation import validate_view
 # Define the Blueprint
 view_bp = Blueprint("users", __name__)
 
-# Base URL for the content service
 CONTENT_SERVICE_URL = "http://content_service:8080/films"
 
 @view_bp.route("/<string:userId>/profiles/<string:profileId>/views", methods=["GET"])
@@ -33,8 +32,6 @@ def get_views(userId, profileId):
         film_id = view.get("filmId")
         if not film_id:
             continue
-
-        # Request film details from the content service
         try:
             response = requests.get(f"{CONTENT_SERVICE_URL}/{film_id}")
             if response.status_code == 200:
@@ -76,7 +73,6 @@ def add_views(userId, profileId):
     """
     data = request.json
 
-    # Handle a list of views
     if isinstance(data, list):
         errors = []
         for view in data:
@@ -94,7 +90,6 @@ def add_views(userId, profileId):
 
         return jsonify({"message": "Views added successfully"}), 201
 
-    # Handle a single view
     valid, error = validate_view(data)
     if not valid:
         return jsonify(error), 400
@@ -132,7 +127,6 @@ def get_view_by_id(userId, profileId, filmId):
     if not view:
         return jsonify({"error": "View not found"}), 404
 
-    # Request film details from the content service
     try:
         response = requests.get(f"{CONTENT_SERVICE_URL}/{filmId}")
         if response.status_code == 200:

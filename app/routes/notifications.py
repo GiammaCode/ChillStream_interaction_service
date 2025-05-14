@@ -3,25 +3,22 @@ from flask import Blueprint, request, jsonify
 from bson import ObjectId
 from services.db import mongo
 
-# Creazione del Blueprint per le notifiche
 notifications_bp = Blueprint("notifications", __name__)
 
-# 🔹 GET: Recupera tutte le notifiche per un profilo specifico
+
 @notifications_bp.route("/<string:userId>/profiles/<string:profileId>/notifications", methods=["GET"])
 def get_notifications(userId, profileId):
     """
     Retrieve all notifications where profileId matches ricever_id.
     """
     notifications = list(mongo.db.notifications.find({"ricever_id": profileId}))
-
     for notification in notifications:
-        notification["_id"] = str(notification["_id"])  # Converti ObjectId in stringa
-
+        notification["_id"] = str(notification["_id"])
     return jsonify(notifications), 200
 
 
-# 🔹 GET: Recupera una singola notifica
-@notifications_bp.route("/<string:userId>/profiles/<string:profileId>/notifications/<string:notificationId>", methods=["GET"])
+@notifications_bp.route("/<string:userId>/profiles/<string:profileId>/notifications/<string:notificationId>",
+                        methods=["GET"])
 def get_single_notification(userId, profileId, notificationId):
     """
     Retrieve a specific notification for a user's profile.
@@ -36,11 +33,9 @@ def get_single_notification(userId, profileId, notificationId):
     if not notification:
         return jsonify({"error": "Notification not found"}), 404
 
-    notification["_id"] = str(notification["_id"])  # Converti ObjectId in stringa
-    return jsonify(notification), 200
+    notification["_id"] = str(notification["_id"])
 
 
-# 🔹 POST: Aggiunge una nuova notifica
 @notifications_bp.route("/<string:userId>/profiles/<string:profileId>/notifications", methods=["POST"])
 def add_notification(userId, profileId):
     """
@@ -55,20 +50,19 @@ def add_notification(userId, profileId):
 
     new_notification = {
         "senderNickname": data["senderNickname"],
-        "ricever_id": profileId,  # Assicuriamoci che la notifica sia per questo profilo
+        "ricever_id": profileId,
         "text": data["text"],
         "isChecked": False,
         "timestamp": datetime.utcnow().isoformat(),
     }
-
     result = mongo.db.notifications.insert_one(new_notification)
     new_notification["_id"] = str(result.inserted_id)
 
     return jsonify(new_notification), 201
 
 
-# 🔹 PUT: Aggiorna una notifica
-@notifications_bp.route("/<string:userId>/profiles/<string:profileId>/notifications/<string:notificationId>", methods=["PUT"])
+@notifications_bp.route("/<string:userId>/profiles/<string:profileId>/notifications/<string:notificationId>",
+                        methods=["PUT"])
 def update_notification(userId, profileId, notificationId):
     """
     Update a specific notification for a user's profile.
@@ -97,8 +91,8 @@ def update_notification(userId, profileId, notificationId):
     return jsonify({"message": "Notification updated successfully"}), 200
 
 
-# 🔹 DELETE: Elimina una notifica
-@notifications_bp.route("/<string:userId>/profiles/<string:profileId>/notifications/<string:notificationId>", methods=["DELETE"])
+@notifications_bp.route("/<string:userId>/profiles/<string:profileId>/notifications/<string:notificationId>",
+                        methods=["DELETE"])
 def delete_notification(userId, profileId, notificationId):
     """
     Delete a specific notification from a user's profile.

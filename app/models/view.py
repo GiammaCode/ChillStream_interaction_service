@@ -35,10 +35,10 @@ class View:
             The number of times the film has been viewed by the profile.
         """
         self.view_id = str(view_id) if view_id else None
-        self.filmId = filmId  # Unique ID of the film
-        self.userId = userId  # Unique ID of the user
-        self.profileId = profileId  # Unique ID of the profile
-        self.timesOFTheFilm = timesOFTheFilm  # Number of views for the film
+        self.filmId = filmId
+        self.userId = userId
+        self.profileId = profileId
+        self.timesOFTheFilm = timesOFTheFilm
 
     def to_dict(self):
         """
